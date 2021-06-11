@@ -1,0 +1,92 @@
+{
+   "type":"record",
+   "name”:”AccountSchema”,
+   "fields":[
+      {
+         "name”:”AccountId”,
+         "type”:”long”
+      },
+      {
+         "name”:”AccountType”,
+         "type”:”int”,
+         “valid_values”:”1,2,3,4”
+      }
+   ]
+}
+
+{
+   "type":"record",
+   "name”:”LoanSchema”,
+   "fields":[
+     {
+         "name”:”LoanId”,
+         "type”:”long”
+      },
+      {
+         "name”:”AccountId”,
+         "type”:”long”
+      },
+      {
+         "name”:”Amount”,
+         "type”:”decimal”
+      }
+   ]
+
+{
+   "type":"record",
+   "name”:”LoanAggSchema”,
+   "fields":[
+     {
+         "name”:”AccountType”,
+         "type”:”int”
+      },
+      {
+         "name”:”TotalCount”,
+         "type”:”int”
+      },
+      {
+         "name”:”TotalAmount”,
+         "type”:”decimal”
+      },
+      {
+         "name”:”LastMinuteCount”,
+         "type”:”int”
+      },
+   ]
+}
+
+
+hh:mm:ss			(AccountId, AccountType)
+00:00:00 Account 		1,			1
+00:00:30 Account 		4,			1
+00:00:50 Account 		3,			2
+00:01:30 Account 		7,			2
+00:02:50 Account 		8,			3
+
+
+hh:mm:ss		(LoanId, AccountId, 	Amount)
+00:00:10 Loan 		1,		1,			10000.00
+00:00:20 Loan 		2,		3,			2000.00
+00:00:40 Loan 		3,		4,			3000.00
+00:01:10 Loan 		4,		7,			6000.00
+00:01:50 Loan 		5,		8,			6000.00
+
+
+Last minute count must contain the number of Loans created for the previous minute
+(each_minute, AccountType, TotalCount ,	 TotalAmount , LastMinuteCount)
+00:01:00 		1,			2,				13000.00,		2
+00:01:00 		2,			1,				2000.00,		2
+00:02:00 		1,			2,				13000.00,		0
+00:02:00 		2,			1,				8000.00,		1
+00:03:00 		1,			2,				13000.00,		0
+00:03:00 		2,			1,				8000.00,		0
+00:04:00 		1,			2,				13000.00,		0
+00:04:00 		2,			1,				8000.00,		0
+
+
+
+==========
+
+Archetype Group Id : net.alchim31.maven
+Archetype Artifact Id : scala-archetype-simple
+Archetype Version : 1.6
